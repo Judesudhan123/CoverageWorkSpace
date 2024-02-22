@@ -38,7 +38,6 @@ public class ValidateAssertions {
 			driver.navigate().to("https://www.amazon.in/");
 			actualTitle = driver.getTitle();
 			expectedTitle = "Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in";
-//			expectedTitle = "Check";
 			
 			try {
 			Assert.assertEquals("Title test fails", actualTitle,expectedTitle);
@@ -64,7 +63,7 @@ public class ValidateAssertions {
 					.findElements(By.xpath("//h2[@class='a-size-mini s-line-clamp-1']//span"));
 			
 			for (int i = 0; i < elements.size(); i++) {
-				if(!elements.get(i).getText().equals("Allen Sol") && !elements.get(i).getText().equals("Levi's")) {
+				if(!elements.get(i).getText().equals("Allen Soly") && !elements.get(i).getText().equals("Levi's")) {
 					JavascriptExecutor executor = (JavascriptExecutor) driver;
 					executor.executeScript("arguments[0].scrollIntoView()", elements.get(i));
 					takeScreenShot.takeScreenShotPath("BrandError"+i);
@@ -76,4 +75,10 @@ public class ValidateAssertions {
 			e.printStackTrace();
 		}
 	}
+	
+//	public String filterByCustomerReviewText() {
+//	WebElement element = driver.findElement(By.xpath("(//span[contains(text(),'4 Stars & Up')])[1]"));
+//	String text = element.getText();
+//	return text;
+//}
 }

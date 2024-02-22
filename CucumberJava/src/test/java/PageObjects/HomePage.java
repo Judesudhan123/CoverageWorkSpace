@@ -59,6 +59,9 @@ public class HomePage {
 	
 	@FindAll({@FindBy(xpath = "//h2[@class='a-size-mini a-spacing-none a-color-base s-line-clamp-2']//a")})
 	private List<WebElement> productList;
+	
+	@FindBy(xpath = "//input[@id='add-to-cart-button']")
+	private WebElement addtoCart;
 
 	@FindBy(xpath = "//input[@name='proceedToRetailCheckout']")
 	private WebElement buyButton;
@@ -98,12 +101,11 @@ public class HomePage {
 	}
 
 	public void clickFashionAndMens() throws InterruptedException, IOException {
-		WebElement element1 = wait.until(ExpectedConditions.elementToBeClickable(navHamburgerMenu));
-		element1.click();
-		WebElement element2 = wait.until(ExpectedConditions.elementToBeClickable(mensfashion));
-		element2.click();
-
-		Thread.sleep(3000);
+		WebElement navMenu = wait.until(ExpectedConditions.elementToBeClickable(navHamburgerMenu));
+		navMenu.click();
+		WebElement mensFashionLink = wait.until(ExpectedConditions.elementToBeClickable(mensfashion));
+		mensFashionLink.click();
+		wait.until(ExpectedConditions.elementToBeClickable(clothing));
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click()", clothing);
 		// while(!isElementPresent(pageLoad))
@@ -117,27 +119,22 @@ public class HomePage {
 		executor.executeScript("arguments[0].click()", starRating);
 	}
 
-	public String filterByCustomerReviewText() {
-		WebElement element = driver.findElement(By.xpath("(//span[contains(text(),'4 Stars & Up')])[1]"));
-		String text = element.getText();
-		return text;
-	}
-
 	public void filterByPriceRange() {
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click()", pricerange);
 	}
 
 	public void filterByBrand() throws InterruptedException {
-		Thread.sleep(6000);
-		JavascriptExecutor executor = (JavascriptExecutor) driver;
-		executor.executeScript("arguments[0].click()", allensollyBrand);
-		WebElement element2 = wait.until(ExpectedConditions.elementToBeClickable(levisBrand));
-		element2.click();
+//		Thread.sleep(3000);
+//		JavascriptExecutor executor = (JavascriptExecutor) driver;
+//		executor.executeScript("arguments[0].click()", allensollyBrand);
+		WebElement allenBrandFilter = wait.until(ExpectedConditions.elementToBeClickable(allensollyBrand));
+		allenBrandFilter.click();
+		WebElement levisBrandFilter = wait.until(ExpectedConditions.elementToBeClickable(levisBrand));
+		levisBrandFilter.click();
 
 	}
-	
-	
+		
 	public void countOftheProduct() throws InterruptedException {
 		Thread.sleep(3000);
 		
@@ -163,15 +160,12 @@ public class HomePage {
 		for (String c : b) {
 			if (!c.equals(a)) {
 				driver.switchTo().window(c);
-
-				Thread.sleep(1000);
 			}
 		}
-		Thread.sleep(3000);
-		WebElement addtoCart = driver.findElement(By.xpath("//input[@id='add-to-cart-button']"));
-		JavascriptExecutor executor = (JavascriptExecutor) driver;
-		executor.executeScript("arguments[0].click()", addtoCart);
-		Thread.sleep(3000);
+		
+		WebElement addtoCartBtn = wait.until(ExpectedConditions.elementToBeClickable(addtoCart));
+		addtoCartBtn.click();
+		
 		WebElement addtocart = driver
 				.findElement(By.xpath("//h1[@class=\"a-size-medium-plus a-color-base sw-atc-text a-text-bold\"]"));
 		String addTocartsuccess = getElementText(addtocart);
@@ -180,7 +174,6 @@ public class HomePage {
 	}
 
 	public String getCartCount() throws InterruptedException {
-		Thread.sleep(3000);
 		WebElement element = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@id='nav-cart-count']")));
 		String text = element.getText();
@@ -191,15 +184,6 @@ public class HomePage {
 		String text = element.getText();
 		return text;
 	}
-
-//	public void takeScreenShotPath(String screenshotName) throws IOException {
-//		TakesScreenshot screenshot = (TakesScreenshot) driver;
-//		File source = screenshot.getScreenshotAs(OutputType.FILE);
-//		String pathname = "C:\\Users\\Agnes Jude\\git\\SampleProjectAmazonLogin\\AmazonDemo\\ScreenShot\\"
-//				+ screenshotName;
-//		File Des = new File(pathname);
-//		FileUtils.copyFile(source, Des);
-//	}
 
 	public void buyProduct() {
 		JavascriptExecutor executor = (JavascriptExecutor) driver;

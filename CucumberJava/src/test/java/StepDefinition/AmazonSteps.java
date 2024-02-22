@@ -24,10 +24,9 @@ public class AmazonSteps {
 	@Given("User is on Amazon.in homepage")
 	public void user_is_on_amazon_in_homepage() throws IOException {
 
-		String currentDirectory=System.getProperty("user.dir");
+//		String currentDirectory=System.getProperty("user.dir");
+//		System.out.println("currentDirectory"+currentDirectory);
 		String driverPath = ConfigReader.getDriverPath();
-
-		System.out.println(currentDirectory+driverPath);
 		System.setProperty("webdriver.chrome.driver", driverPath);
 		driver = new ChromeDriver();
 
@@ -78,7 +77,8 @@ public class AmazonSteps {
 			throws IOException, InterruptedException {
 		String actualValue = (String) homePage.getCartCount();
 		takeScreenShot.takeScreenShotPath("AddtoCartPage.png");
-		System.out.println("Cart count added sucessfully");
+		Assert.assertEquals(actualValue, expectedCount);
+		System.out.println("Cart count Verified Successfully");
 
 		if (!actualValue.equals(expectedCount)) {
 			System.out.println("Cart Count Assert Verification failed");
